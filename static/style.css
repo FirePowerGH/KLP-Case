@@ -27,3 +27,25 @@ header .menu button {
 header .menu button:hover {
     background-color: #777;
 }
+
+main {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.content {
+    display: flex;
+    gap: 4rem;
+    justify-content: space-between;
+}
+.content .left {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+.content img {
+    height: 200px;
+    border-radius: 5%;
+}
