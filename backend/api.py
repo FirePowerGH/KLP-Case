@@ -2,10 +2,10 @@ import sqlite3
 
 def createTable():
     # Koble til databasen, eller lage en hvis den ikke finnes
-    conn = sqlite3.connect('backend/database.db')
+    con = sqlite3.connect('backend/database.db')
 
     # Lage en cursor for å utføre SQL-spørringer
-    cursor = conn.cursor()
+    cursor = con.cursor()
 
     # Lage en tabell for bruker informasjon
     cursor.execute(
@@ -28,6 +28,6 @@ def createTable():
         )'''
     )
 
-    conn.commit()
+    con.commit()
     cursor.close()
-    conn.close()
+    con.close()
