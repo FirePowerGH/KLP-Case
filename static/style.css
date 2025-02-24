@@ -67,3 +67,25 @@ main {
     height: 200px;
     border-radius: 5%;
 }
+
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 25%;
+}
+.form form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-block: 15px;
+}
+.form input {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    border-radius: 5%;
+    border: 1px solid #333;
+}

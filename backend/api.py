@@ -12,10 +12,7 @@ def createTable():
         '''CREATE TABLE IF NOT EXISTS brukere (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             navn VARCHAR(255) NOT NULL,
-            email VARCHAR(255) NOT NULL,
-            tlf INT NOT NULL,
             password VARCHAR(255) NOT NULL,
-            fødselnummer INT NOT NULL,
             kontonr INT NOT NULL
         )'''
     )
@@ -26,6 +23,19 @@ def createTable():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             brukerid VARCHAR(255) NOT NULL
         )'''
+    )
+
+    con.commit()
+    cursor.close()
+    con.close()
+
+def registrerBruker(navn, password, kontonr):
+    con = sqlite3.connect('backend/database.db')
+    cursor = con.cursor()
+
+    cursor.execute(
+        '''INSERT INTO brukere (navn, password, kontonr) VALUES (?, ?, ?)''',
+        (navn, password, kontonr)
     )
 
     con.commit()

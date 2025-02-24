@@ -18,13 +18,14 @@
         </div>
     </header>
     <main>
-        <div class="content">
-            <div class="left">
-                <h2>Lefty testy boogy</h2>
-            </div>
-            <div class="right">
-                <img src="static/images/business-meeting.jpg" alt="Business Meeting Image from Getty Images">
-            </div>
+        <div class="form">
+            <h2>Logg Inn</h2>
+            <form action="/login" method="post">
+                <input type="name" id="name" name="name" placeholder="Navn" required>
+                <input type="password" name="password" placeholder="Passord" required>
+                <button type="submit">Logg Inn</button>
+            </form>
+            <a href="/register">Registrer deg</a>
         </div>
     </main>
     <script src="static/header-script.js"></script>
