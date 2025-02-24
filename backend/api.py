@@ -61,3 +61,21 @@ class Database:
                 VALUES (?, ?, ?, ?)''',
                 (navn, password, salt, kontonr)
             )
+    
+    def checkUser(self, navn, password):
+        import hashlib
+
+        with self:
+            self.cursor.execute(
+                '''SELECT password, salt FROM brukere WHERE navn = ?''',
+                (navn,)
+            )
+            res = self.cursor.fetchone()
+
+            if res is None:
+                return False
+
+            password = password + res[1]
+            password = hashlib.sha256(password.encode()).hexdigest()
+
+            return password == res[0]

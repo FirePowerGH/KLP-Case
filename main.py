@@ -15,6 +15,14 @@ def index():
 def registrer():
     if request.method == 'GET':
         return render_template('login.html')
+    
+    name = request.form['name']
+    password = request.form['password']
+
+    if db.checkUser(name, password):
+        return redirect('/bank')
+    else:
+        return redirect('/login')
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
