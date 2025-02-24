@@ -1,9 +1,10 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, redirect
 from backend.api import Database
 
 app = Flask(__name__, template_folder='static/templates')
 
 db = Database()
+db.createTable()
 
 @app.route('/')
 def index():
@@ -20,9 +21,13 @@ def register():
     if request.method == 'GET':
         return render_template('register.html')
     
-    data = jsonify(request.form)
+    name = request.form['name']
+    password = request.form['password']
 
-    return data
+    db.regUser(name, password)
+    print(f'User {name} registered with password: {password}')
+
+    return redirect('/login')
 
 @app.route('/bank', methods=['GET', 'POST'])
 def bank():
