@@ -6,10 +6,6 @@ logo.addEventListener('click', () => {
     window.location.href = '/';
 });
 
-login.addEventListener('click', () => {
-    window.location.href = '/login';
-});
-
 bank.addEventListener('click', () => {
     window.location.href = '/bank';
 });

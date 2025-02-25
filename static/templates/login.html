@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="static/style.css">
     <title>Document</title>
 </head>
 <body>
@@ -12,7 +12,11 @@
             <h1>K-Bank</h1>
         </div>
         <div class="menu">
-            <button id="login">Logg inn</button>
+            {% if session["name"] %}
+            <button id="logout", onclick="window.location.href = '/logout'">Logg ut</button>
+            {% else %}
+            <button id="login" , onclick="window.location.href = '/login'">Logg inn</button>
+            {% endif %}
             <button>Button 2</button>
             <button id="bank">Bank</button>
         </div>
@@ -24,6 +28,11 @@
                 <input type="name" id="name" name="name" placeholder="Navn" required>
                 <input type="password" name="password" placeholder="Passord" required>
                 <button type="submit">Logg Inn</button>
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <p class="error">{{ messages[0] }}</p>
+                    {% endif %}
+                {% endwith %}
             </form>
             <a href="/register">Registrer deg</a>
         </div>

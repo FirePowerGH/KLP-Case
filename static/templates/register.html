@@ -12,7 +12,11 @@
             <h1>K-Bank</h1>
         </div>
         <div class="menu">
-            <button id="login">Logg inn</button>
+            {% if session["name"] %}
+            <button id="logout", onclick="window.location.href = '/logout'">Logg ut</button>
+            {% else %}
+            <button id="login" , onclick="window.location.href = '/login'">Logg inn</button>
+            {% endif %}
             <button>Button 2</button>
             <button id="bank">Bank</button>
         </div>
@@ -20,7 +24,7 @@
     <main>
         <div class="form">
             <h2>Registrer Deg</h2>
-            <form action="/register" method="post">
+            <form action="register" method="post">
                 <input type="name" id="name" name="name" placeholder="Navn" required>
                 <input type="password" name="password" placeholder="Passord" required>
                 <button type="submit">Registrer Deg</button>

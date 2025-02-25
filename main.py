@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session, flash, get_flashed_messages
 from backend.api import Database
 
 app = Flask(__name__, template_folder='static/templates')
+app.config['SECRET_KEY'] = "vwledigsceretkey"
 
 db = Database()
 db.createTable()
@@ -12,7 +13,7 @@ def index():
     return render_template('index.html')
 
 @app.route('/login', methods=['GET', 'POST'])
-def registrer():
+def login():
     if request.method == 'GET':
         return render_template('login.html')
     
@@ -20,8 +21,10 @@ def registrer():
     password = request.form['password']
 
     if db.checkUser(name, password):
+        session['name'] = name
         return redirect('/bank')
     else:
+        flash('Feil brukernavn eller passord')
         return redirect('/login')
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -41,5 +44,10 @@ def register():
 def bank():
     return render_template('bank.html')
 
+@app.route('/logout')
+def logout():
+    session.pop('name', None)
+    return redirect('/')
+
 if __name__ == '__main__':
-    app.run(debug=True) 
+    app.run(debug=True, host='0.0.0.0') 

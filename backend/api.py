@@ -30,7 +30,7 @@ class Database:
                     navn VARCHAR(255) NOT NULL,
                     password VARCHAR(255) NOT NULL,
                     salt VARCHAR(255) NOT NULL,
-                    kontonr INT NOT NULL
+                    kontonr INT UNIQUE
                 )'''
             )
             self.cursor.execute(
@@ -40,27 +40,42 @@ class Database:
                     FOREIGN KEY (brukerid) REFERENCES brukere(id)
                 )'''
             )
+    
+    def genKontoNr(self):
+        from random import randint
+
+        num1 = randint(1000, 9999)
+        num2 = randint(100, 999)
+        kontonr: str = ' '.join(['8317', str(num1), str(num2)])
+        return kontonr
 
     def regUser(self, navn, password):
-        from random import randint
+        from random import randbytes
         import hashlib
 
-        salt = str(randint(1, 99))
+        salt = str(randbytes(32))
         salt = hashlib.sha256(salt.encode()).hexdigest()
 
         password = password + salt
         password = hashlib.sha256(password.encode()).hexdigest()
 
-        num1 = randint(1000, 9999)
-        num2 = randint(100, 999)
-        kontonr: str = ' '.join(['8317', str(num1), str(num2)])
+        kontonr = self.genKontoNr()
 
         with self:
-            self.cursor.execute(
-                '''INSERT INTO brukere (navn, password, salt, kontonr)
-                VALUES (?, ?, ?, ?)''',
-                (navn, password, salt, kontonr)
-            )
+            try:
+                self.cursor.execute(
+                    '''INSERT INTO brukere (navn, password, salt, kontonr)
+                    VALUES (?, ?, ?, ?)''',
+                    (navn, password, salt, kontonr)
+                )
+            except sqlite3.IntegrityError:
+                kontonr = self.genKontoNr()
+
+                self.cursor.execute(
+                    '''INSERT INTO brukere (navn, password, salt, kontonr)
+                    VALUES (?, ?, ?, ?)''',
+                    (navn, password, salt, kontonr)
+                )
     
     def checkUser(self, navn, password):
         import hashlib

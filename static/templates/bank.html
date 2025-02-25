@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="static/style.css">
     <title>Document</title>
 </head>
 <body>
@@ -12,13 +12,19 @@
             <h1>K-Bank</h1>
         </div>
         <div class="menu">
-            <button id="login">Logg inn</button>
+            {% if session["name"] %}
+            <button id="logout", onclick="window.location.href = '/logout'">Logg ut</button>
+            {% else %}
+            <button id="login" , onclick="window.location.href = '/login'">Logg inn</button>
+            {% endif %}
             <button>Button 2</button>
             <button id="bank">Bank</button>
         </div>
     </header>
     <main>
-        <p>hai</p>
+        {% if session["name"] %}
+        <p>hai {{ session["name"] }}</p>
+        {% endif %}
     </main>
     <script src="static/header-script.js"></script>
 </body>

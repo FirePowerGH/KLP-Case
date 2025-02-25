@@ -81,6 +81,8 @@ main {
     flex-direction: column;
     gap: 10px;
     margin-block: 15px;
+    width: 50%;
+    height: auto;
 }
 .form input {
     display: flex;
@@ -88,4 +90,8 @@ main {
     padding: 10px;
     border-radius: 5%;
     border: 1px solid #333;
+}
+.error {
+    color: red;
+    font-size: 22px;
 }
