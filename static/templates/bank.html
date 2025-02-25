@@ -12,22 +12,24 @@
             <h1>K-Bank</h1>
         </div>
         <div class="menu">
+            <!-- Viser Logg ut-knapp hvis brukeren er logget inn, ellers Logg inn-knapp -->
             {% if session["name"] %}
-            <button id="logout", onclick="window.location.href = '/logout'">Logg ut</button>
+            <button id="logout" onclick="window.location.href = '/logout'">Logg ut</button>
             {% else %}
-            <button id="login" , onclick="window.location.href = '/login'">Logg inn</button>
+            <button id="login" onclick="window.location.href = '/login'">Logg inn</button>
             {% endif %}
             <button>Button 2</button>
             <button id="bank">Bank</button>
         </div>
     </header>
     <main>
+        <!-- Viser saldo og innskuddsskjema hvis brukeren er logget inn -->
         {% if session["name"] %}
         <h2>Velkommen, {{ session["name"] }}</h2> <br>
         <div>
             <p>Du har {{ saldo }}kr på kontoen</p>
-            <form action="/transaksjon" method="post" class="content">
-                <input type="number", name="verdi", placeholder="0">
+            <form action="" method="post" class="content">
+                <input type="number" name="verdi" placeholder="0">
                 <button type="submit">Submit</button>
             </form>
         </div>

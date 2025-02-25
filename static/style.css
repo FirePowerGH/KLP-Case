@@ -61,18 +61,6 @@ main h2 {
     gap: 10px;
     justify-content: space-between;
 }
-.content .left {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-}
-.content .right {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-}
 .content button {
     background-color: #555;
     color: white;
