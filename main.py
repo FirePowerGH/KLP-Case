@@ -42,7 +42,18 @@ def register():
 
 @app.route('/bank', methods=['GET', 'POST'])
 def bank():
-    return render_template('bank.html')
+    if request.method == 'GET':
+        navn = session['name']
+        saldo = db.getSaldo(navn)
+        print(saldo)
+        return render_template('bank.html', saldo=saldo)
+
+@app.route('/transaksjon', methods=['POST'])
+def transaksjon():
+    navn = session['name']
+    verdi = int(request.form['verdi'])
+    db.updateSaldo(navn, verdi)
+    return redirect('/bank')
 
 @app.route('/logout')
 def logout():

@@ -58,7 +58,7 @@ main h2 {
 }
 .content {
     display: flex;
-    gap: 4rem;
+    gap: 10px;
     justify-content: space-between;
 }
 .content .left {
@@ -67,9 +67,19 @@ main h2 {
     justify-content: flex-start;
     align-items: center;
 }
-.content img {
-    height: 200px;
-    border-radius: 5%;
+.content .right {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+.content button {
+    background-color: #555;
+    color: white;
+    border: none;
+    border-radius: 15%;
+    padding: 10px 20px;
+    cursor: pointer;
 }
 
 .form {

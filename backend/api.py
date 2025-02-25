@@ -36,8 +36,8 @@ class Database:
             self.cursor.execute(
                 '''CREATE TABLE IF NOT EXISTS transaksjon (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    brukerid INTEGER NOT NULL,
-                    FOREIGN KEY (brukerid) REFERENCES brukere(id)
+                    brukernavn VARCHAR(255) NOT NULL,
+                    saldo INTEGER
                 )'''
             )
     
@@ -68,6 +68,11 @@ class Database:
                     VALUES (?, ?, ?, ?)''',
                     (navn, password, salt, kontonr)
                 )
+
+                self.cursor.execute(
+                    '''INSERT INTO transaksjon (saldo)
+                    VALUES (0)'''
+                )
             except sqlite3.IntegrityError:
                 kontonr = self.genKontoNr()
 
@@ -75,6 +80,12 @@ class Database:
                     '''INSERT INTO brukere (navn, password, salt, kontonr)
                     VALUES (?, ?, ?, ?)''',
                     (navn, password, salt, kontonr)
+                )
+
+                self.cursor.execute(
+                    '''INSERT INTO transaksjon (brukernavn, saldo)
+                    VALUES (?, 0)''',
+                    (navn,)
                 )
     
     def checkUser(self, navn, password):
@@ -94,3 +105,30 @@ class Database:
             password = hashlib.sha256(password.encode()).hexdigest()
 
             return password == res[0]
+
+    def getSaldo(self, navn):
+        with self:
+            self.cursor.execute(
+                '''SELECT saldo FROM transaksjon WHERE brukernavn = ?''',
+                (navn,)
+            )
+            res = self.cursor.fetchone()[0]
+            return res
+    
+    def updateSaldo(self, navn, verdi):
+        with self:
+            if verdi > 0:
+                self.cursor.execute(
+                    '''UPDATE transaksjon
+                    SET saldo = saldo + ? WHERE brukernavn = ?''',
+                    (verdi, navn,)
+                )
+            elif verdi < 0:
+                verdi = verdi * -1
+                self.cursor.execute(
+                    '''UPDATE transaksjon
+                    SET saldo = saldo - ? WHERE brukernavn = ?''',
+                    (verdi, navn,)
+                )
+            else:
+                pass
