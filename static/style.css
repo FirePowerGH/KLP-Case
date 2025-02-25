@@ -49,8 +49,12 @@ header .menu button:active {
 main {
     padding: 20px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+main h2 {
+    font-size: 32px;
 }
 .content {
     display: flex;

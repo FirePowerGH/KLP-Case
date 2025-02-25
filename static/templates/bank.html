@@ -23,7 +23,8 @@
     </header>
     <main>
         {% if session["name"] %}
-        <p>hai {{ session["name"] }}</p>
+        <h2>Velkommen, {{ session["name"] }}</h2> <br>
+        <button id="nykonto">Legg til ny konto</button>
         {% endif %}
     </main>
     <script src="static/header-script.js"></script>
